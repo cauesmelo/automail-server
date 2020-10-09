@@ -1,2 +1,8 @@
 node_modules
-.DS_Store
+.vscode/
+.idea/
+build/
+tmp/*
+.env
+ormconfig.json
+!tmp/.gitkeep

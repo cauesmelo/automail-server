@@ -6,6 +6,9 @@
   "username": "root",
   "password": "EgirlRabuda",
   "database": "litterae",
+  "entities": [
+    "./src/modules/**/infra/typeorm/entities/*.ts"
+  ],
   "migrations": [
     "./src/shared/infra/typeorm/migrations/*.ts"
   ],

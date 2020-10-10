@@ -23,7 +23,7 @@ class Email {
 
   @ManyToOne(() => List)
   @JoinColumn({ name: 'listId' })
-  list: List;
+  listId: List;
 
   @CreateDateColumn()
   createdAt: Date;

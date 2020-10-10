@@ -1,4 +1,5 @@
 export default interface ICreateListDTO {
-  userId: string;
+  listId: string;
   name: string;
+  email: string;
 }

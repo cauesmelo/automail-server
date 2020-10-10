@@ -35,8 +35,10 @@ class ListsRepository implements IListsRepository {
     return this.ormRepository.save(list);
   }
 
-  public async create(listData: ICreateListDTO): Promise<List> {
-    const list = this.ormRepository.create(listData);
+  // used any here because of a bug in typeorm
+  // https://github.com/typeorm/typeorm/issues/2904
+  public async create(listData: ICreateListDTO): Promise<any> {
+    const list = this.ormRepository.create(listData as any);
     await this.ormRepository.save(list);
     return list;
   }

@@ -13,4 +13,6 @@ listsRouter.post('/', listsController.create);
 
 listsRouter.delete('/:listId', listsController.delete);
 
+listsRouter.put('/:listId', listsController.put);
+
 export default listsRouter;

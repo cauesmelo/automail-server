@@ -4,6 +4,7 @@ import { container } from 'tsyringe';
 import CreateListService from '@modules/lists/services/CreateListService';
 import ListListsService from '@modules/lists/services/ListListsService';
 import DeleteListService from '@modules/lists/services/DeleteListService';
+import RenameListService from '@modules/lists/services/RenameListService';
 
 export default class ListsController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -42,5 +43,19 @@ export default class ListsController {
     });
 
     return response.status(200).json();
+  }
+
+  public async put(request: Request, response: Response): Promise<Response> {
+    const { name } = request.body;
+    const { listId } = request.params;
+
+    const renameList = container.resolve(RenameListService);
+
+    const list = await renameList.execute({
+      id: listId,
+      name,
+    });
+
+    return response.json(list);
   }
 }

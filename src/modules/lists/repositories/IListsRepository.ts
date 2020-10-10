@@ -7,4 +7,5 @@ export default interface IListsRepository {
   create(data: ICreateListDTO): Promise<List>;
   save(list: List): Promise<List>;
   findAllFromUser(data: IFindAllFromUserDTO): Promise<List[] | undefined>;
+  delete(listId: string): Promise<void>;
 }

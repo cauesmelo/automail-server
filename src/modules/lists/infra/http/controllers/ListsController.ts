@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 
 import CreateListService from '@modules/lists/services/CreateListService';
 import ListListsService from '@modules/lists/services/ListListsService';
+import DeleteListService from '@modules/lists/services/DeleteListService';
 
 export default class ListsController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -29,5 +30,17 @@ export default class ListsController {
     });
 
     return response.json(listOfLists);
+  }
+
+  public async delete(request: Request, response: Response): Promise<Response> {
+    const { listId } = request.params;
+
+    const deleteList = container.resolve(DeleteListService);
+
+    await deleteList.execute({
+      listId,
+    });
+
+    return response.status(200).json();
   }
 }

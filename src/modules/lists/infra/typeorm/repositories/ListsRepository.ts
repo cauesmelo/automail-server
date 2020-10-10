@@ -40,6 +40,10 @@ class ListsRepository implements IListsRepository {
     await this.ormRepository.save(list);
     return list;
   }
+
+  public async delete(listId: string): Promise<void> {
+    this.ormRepository.delete(listId);
+  }
 }
 
 export default ListsRepository;

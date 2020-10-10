@@ -1,3 +1,3 @@
-export default interface ICreateListDTO {
+export default interface IFindAllFromListDTO {
   listId: string;
 }

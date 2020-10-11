@@ -3,11 +3,13 @@ import AppError from '@shared/errors/AppError';
 import path from 'path';
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 import IEmailsRepository from '@modules/emails/repositories/IEmailsRepository';
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IListsRepository from '../repositories/IListsRepository';
 
 interface IRequest {
   listId: string;
   modelId: string;
+  userId: string;
 }
 
 interface MailItem {
@@ -24,14 +26,18 @@ export default class SendToListService {
     @inject('EmailsRepository')
     private emailsRepository: IEmailsRepository,
 
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
+
     @inject('MailProvider')
     private mailProvider: IMailProvider,
   ) {}
 
-  public async execute({ listId, modelId }: IRequest): Promise<void> {
+  public async execute({ listId, modelId, userId }: IRequest): Promise<void> {
     const list = await this.listsRepository.findById(listId);
+    const user = await this.usersRepository.findById(userId);
 
-    // This line right now it's useless, it'll be used in the future.
+    // This line it's useless right now, it'll be used in the future.
     if (!modelId) {
       throw new AppError('Please, specify an model for the e-mail.');
     }
@@ -55,10 +61,7 @@ export default class SendToListService {
 
     emailsList.forEach(async (e: MailItem) => {
       await this.mailProvider.sendMail({
-        to: {
-          name: e.name,
-          email: e.email,
-        },
+        to: e.email,
         subject: '[Litterae] E-mail de teste',
         templateData: {
           file: basicTemplate,
@@ -66,6 +69,7 @@ export default class SendToListService {
             name: e.name,
           },
         },
+        from: user?.email,
       });
     });
   }

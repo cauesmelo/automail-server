@@ -6,5 +6,5 @@ tmp/*
 .env
 ormconfig.json
 !tmp/.gitkeep
-ormconfig.json
 credentials.json
+ormconfig.json

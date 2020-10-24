@@ -7,3 +7,4 @@ tmp/*
 ormconfig.json
 !tmp/.gitkeep
 ormconfig.json
+credentials.json

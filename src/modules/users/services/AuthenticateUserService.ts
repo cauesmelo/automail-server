@@ -1,19 +1,30 @@
 import { injectable, inject } from 'tsyringe';
-import { sign } from 'jsonwebtoken';
-import User from '@modules/users/infra/typeorm/entities/User';
-import AppError from '@shared/errors/AppError';
-import configAuth from '@config/auth';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import { OAuth2Client } from 'google-auth-library';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
-interface IRequest {
+interface IResponse {
+  name: string;
+  picture: string;
+  givenName: string;
+  familyName: string;
+  locale: string;
   email: string;
-  password: string;
 }
 
-interface IResponse {
-  user: User;
-  token: string;
+interface IPayload {
+  name: string;
+  picture: string;
+  given_name: string;
+  family_name: string;
+  locale: string;
+  email: string;
+}
+
+interface VerifyIdTokenOptions {
+  idToken: string;
+  audience?: string | string[];
+  maxExpiry?: number;
 }
 
 @injectable()
@@ -26,36 +37,52 @@ export default class AuthenticateUserService {
     private hashProvider: IHashProvider,
   ) {}
 
-  public async execute({ email, password }: IRequest): Promise<IResponse> {
-    const user = await this.usersRepository.findByEmail(email);
+  public async execute(idToken: string): Promise<IResponse> {
+    const { GOOGLE_MAILING_CLIENT_ID } = process.env;
 
-    if (!user) {
-      throw new AppError('Incorrect email/password combination.');
+    const client = new OAuth2Client(GOOGLE_MAILING_CLIENT_ID);
+
+    async function verifyToken() {
+      try {
+        const tokenData: VerifyIdTokenOptions = {
+          idToken,
+          audience: GOOGLE_MAILING_CLIENT_ID,
+        };
+        const ticket = await client.verifyIdToken(tokenData);
+        const payload = ticket.getPayload();
+        return payload;
+      } catch (error) {
+        console.log(error);
+      }
+      return null;
     }
 
-    const passwordMatched = await this.hashProvider.compareHash(
-      password,
-      user.password,
-    );
+    // Verificar como anular este erro
 
-    if (!passwordMatched) {
-      throw new AppError('Incorrect email/password combination.');
-    }
+    const {
+      name,
+      picture,
+      given_name,
+      family_name,
+      locale,
+      email,
+    } = await verifyToken();
 
-    // eslint-disable-next-line
-    // @ts-ignore
-    delete user.password;
-
-    const { secret, expiresIn } = configAuth.jwt;
-
-    const token = sign({}, secret, {
-      subject: user.id,
-      expiresIn,
-    });
-
-    return {
-      user,
-      token,
+    const user = {
+      name,
+      picture,
+      givenName: given_name,
+      familyName: family_name,
+      locale,
+      email,
     };
+
+    // const user = await this.usersRepository.findByEmail(email);
+
+    // if (!user) {
+    //   throw new AppError('Incorrect email/password combination.');
+    // }
+
+    return user;
   }
 }

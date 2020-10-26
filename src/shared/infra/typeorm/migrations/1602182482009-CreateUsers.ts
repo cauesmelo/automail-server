@@ -22,8 +22,28 @@ export default class CreateUsers1602182482009 implements MigrationInterface {
             isUnique: true,
           },
           {
-            name: 'password',
+            name: 'premium',
+            type: 'boolean',
+          },
+          {
+            name: 'deleted',
+            type: 'boolean',
+          },
+          {
+            name: 'companyName',
             type: 'varchar',
+          },
+          {
+            name: 'premiumInitialDate',
+            type: 'timestamp',
+          },
+          {
+            name: 'premiumEndDate',
+            type: 'timestamp',
+          },
+          {
+            name: 'billingDate',
+            type: 'date',
           },
           {
             name: 'createdAt',

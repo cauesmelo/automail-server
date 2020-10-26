@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateEmailList1602190266541
+export default class CreateBumpSettings1603653362750
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'lists',
+        name: 'bumpSettings',
         columns: [
           {
             name: 'id',
@@ -14,8 +14,24 @@ export default class CreateEmailList1602190266541
             generationStrategy: 'uuid',
           },
           {
-            name: 'name',
+            name: 'timezone',
             type: 'varchar',
+          },
+          {
+            name: 'bumpDays',
+            type: `set('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday')`,
+          },
+          {
+            name: 'bumpTimeStart',
+            type: 'timestamp',
+          },
+          {
+            name: 'bumpTimeEnd',
+            type: 'timestamp',
+          },
+          {
+            name: 'bumpCopy',
+            type: 'boolean',
           },
           {
             name: 'createdAt',
@@ -33,6 +49,6 @@ export default class CreateEmailList1602190266541
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('lists');
+    await queryRunner.dropTable('bumpSettings');
   }
 }

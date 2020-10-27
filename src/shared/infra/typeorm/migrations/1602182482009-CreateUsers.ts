@@ -35,15 +35,18 @@ export default class CreateUsers1602182482009 implements MigrationInterface {
           },
           {
             name: 'premiumInitialDate',
-            type: 'timestamp',
+            type: 'datetime',
+            isNullable: true,
           },
           {
             name: 'premiumEndDate',
-            type: 'timestamp',
+            type: 'datetime',
+            isNullable: true,
           },
           {
             name: 'billingDate',
             type: 'date',
+            isNullable: true,
           },
           {
             name: 'createdAt',

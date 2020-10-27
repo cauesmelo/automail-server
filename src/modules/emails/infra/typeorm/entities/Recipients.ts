@@ -22,16 +22,16 @@ class Recipients {
   @Column('boolean')
   active: boolean;
 
-  @Column('timestamp')
+  @Column('datetime')
   startDate: Date;
 
-  @Column('timestamp')
+  @Column('datetime')
   endDate: Date;
 
-  @Column('timestamp')
+  @Column('datetime')
   lastBumpDay: Date;
 
-  @Column('timestamp')
+  @Column('datetime')
   nextBumpDay: Date;
 
   @Column()

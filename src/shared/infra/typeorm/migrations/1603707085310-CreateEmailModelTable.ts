@@ -8,7 +8,10 @@ export default class CreateEmailModelTable1603707085310
         id CHAR(36) NOT NULL PRIMARY KEY,
         userId CHAR(36) NOT NULL,
         followUpSequenceId CHAR(36) NOT NULL,
-        content TEXT NOT NULL)
+        content TEXT NOT NULL,
+        createdAt timestamp DEFAULT CURRENT_TIMESTAMP,
+        updatedAt timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+      )
       `);
 
     await queryRunner.query(`

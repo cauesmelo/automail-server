@@ -11,10 +11,12 @@ export default class CreateRecipientsTable1603656780166
       followUpSequenceId CHAR(36) NOT NULL,
       email VARCHAR(255) NOT NULL,
       active boolean NOT NULL,
-      startDate timestamp NOT NULL,
-      endDate timestamp NOT NULL,
-      lastBumpDay timestamp NOT NULL,
-      nextBumpDay timestamp NOT NULL
+      startDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      endDate datetime,
+      lastBumpDay datetime NOT NULL,
+      nextBumpDay datetime NOT NULL,
+      createdAt timestamp DEFAULT CURRENT_TIMESTAMP,
+      updatedAt timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )
     `,
     );

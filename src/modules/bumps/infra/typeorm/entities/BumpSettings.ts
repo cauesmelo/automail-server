@@ -45,10 +45,10 @@ class BumpSettings {
   })
   bumpDays: DaysOfWeek[];
 
-  @Column('timestamp')
+  @Column('time')
   bumpTimeStart: Date;
 
-  @Column('timestamp')
+  @Column('time')
   bumpTimeEnd: Date;
 
   @Column('boolean')

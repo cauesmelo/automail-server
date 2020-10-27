@@ -23,11 +23,13 @@ export default class CreateBumpSettings1603653362750
           },
           {
             name: 'bumpTimeStart',
-            type: 'timestamp',
+            type: 'time',
+            default: '080000',
           },
           {
             name: 'bumpTimeEnd',
-            type: 'timestamp',
+            type: 'time',
+            default: '200000',
           },
           {
             name: 'bumpCopy',

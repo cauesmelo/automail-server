@@ -7,7 +7,10 @@ export default class CreateFollowUpSequenceTable1603664111355
     CREATE TABLE followUpSequence(
     id CHAR(36) NOT NULL PRIMARY KEY,
     userId CHAR(36) NOT NULL,
-    title VARCHAR(255) NOT NULL UNIQUE)
+    title VARCHAR(255) NOT NULL,
+    createdAt timestamp DEFAULT CURRENT_TIMESTAMP,
+    updatedAt timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )
     `);
 
     await queryRunner.query(`

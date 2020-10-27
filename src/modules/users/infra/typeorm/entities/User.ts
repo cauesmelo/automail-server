@@ -33,10 +33,10 @@ class User {
   @Column()
   companyName: string;
 
-  @Column('timestamp')
+  @Column('datetime')
   premiumInitialDate: Date;
 
-  @Column('timestamp')
+  @Column('datetime')
   premiumEndDate: Date;
 
   @Column('date')
@@ -47,6 +47,9 @@ class User {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column()
+  bumpSettingsId: string;
 
   @OneToOne(() => BumpSettings)
   @JoinColumn()

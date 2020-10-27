@@ -1,25 +1,9 @@
-import { injectable, inject } from 'tsyringe';
+import { injectable, inject, container } from 'tsyringe';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import { OAuth2Client } from 'google-auth-library';
-import IHashProvider from '../providers/HashProvider/models/IHashProvider';
-
-interface IResponse {
-  name: string;
-  picture: string;
-  givenName: string;
-  familyName: string;
-  locale: string;
-  email: string;
-}
-
-interface IPayload {
-  name: string;
-  picture: string;
-  given_name: string;
-  family_name: string;
-  locale: string;
-  email: string;
-}
+import AppError from '@shared/errors/AppError';
+import CreateUserService from './CreateUserService';
+import User from '../infra/typeorm/entities/User';
 
 interface VerifyIdTokenOptions {
   idToken: string;
@@ -32,12 +16,9 @@ export default class AuthenticateUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
-
-    @inject('HashProvider')
-    private hashProvider: IHashProvider,
   ) {}
 
-  public async execute(idToken: string): Promise<IResponse> {
+  public async execute(idToken: string): Promise<User> {
     const { GOOGLE_MAILING_CLIENT_ID } = process.env;
 
     const client = new OAuth2Client(GOOGLE_MAILING_CLIENT_ID);
@@ -57,32 +38,29 @@ export default class AuthenticateUserService {
       return null;
     }
 
-    // Verificar como anular este erro
+    const payloadUser = await verifyToken();
 
-    const {
-      name,
-      picture,
-      given_name,
-      family_name,
-      locale,
-      email,
-    } = await verifyToken();
+    if (!payloadUser?.email) {
+      throw new AppError('Erro na autenticação.');
+    }
 
-    const user = {
-      name,
-      picture,
-      givenName: given_name,
-      familyName: family_name,
-      locale,
-      email,
-    };
+    const findUser = await this.usersRepository.findByEmail(payloadUser?.email);
 
-    // const user = await this.usersRepository.findByEmail(email);
+    if (!findUser) {
+      const createUser = container.resolve(CreateUserService);
 
-    // if (!user) {
-    //   throw new AppError('Incorrect email/password combination.');
-    // }
+      const createdUser = await createUser.execute({
+        email: payloadUser.email,
+        companyName: '',
+        deleted: false,
+        name: payloadUser.name ? payloadUser.name : 'Usuário sem nome',
+        premium: false,
+        userType: 'free',
+      });
 
-    return user;
+      return createdUser;
+    }
+
+    return findUser;
   }
 }

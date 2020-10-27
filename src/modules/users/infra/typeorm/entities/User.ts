@@ -11,6 +11,8 @@ import {
   JoinColumn,
 } from 'typeorm';
 
+export type UserType = 'free' | 'premium';
+
 @Entity('users')
 class User {
   @PrimaryGeneratedColumn('uuid')
@@ -52,6 +54,12 @@ class User {
 
   @OneToMany(() => FollowUpSequence, followUpSequence => followUpSequence.user)
   followUpSequence: FollowUpSequence[];
+
+  @Column({
+    type: 'enum',
+    enum: ['free', 'premium'],
+  })
+  userType: UserType;
 }
 
 export default User;

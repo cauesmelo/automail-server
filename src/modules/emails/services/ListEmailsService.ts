@@ -1,5 +1,5 @@
 import { injectable, inject } from 'tsyringe';
-import Email from '@modules/emails/infra/typeorm/entities/Email';
+import Email from '@modules/emails/infra/typeorm/entities/Recipients';
 import IFindAllFromListDTO from '@modules/emails/dtos/IFindAllFromListDTO';
 import AppError from '@shared/errors/AppError';
 import IListsRepository from '@modules/lists/repositories/IListsRepository';

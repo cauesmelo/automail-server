@@ -36,9 +36,15 @@ export default async function ensureAuthenticated(
       return payload;
     } catch (error) {
       throw new AppError('Invalid token.', 401);
+      // deslogar usuario no front
     }
   }
 
-  verifyToken().then();
+  verifyToken()
+    .then()
+    .catch(e => {
+      console.log(e);
+    });
+
   return next();
 }

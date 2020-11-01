@@ -28,7 +28,7 @@ class BumpSettings {
   @Column()
   userId: string;
 
-  @OneToOne(() => User)
+  @OneToOne(() => User, user => user)
   user: User;
 
   @Column({

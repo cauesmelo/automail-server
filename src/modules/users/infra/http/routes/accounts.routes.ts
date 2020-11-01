@@ -7,6 +7,6 @@ import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthentica
 const accountsRouter = Router();
 const accountsController = new AccountsController();
 
-accountsRouter.get('/', ensureAuthenticated, accountsController.index);
+accountsRouter.get('/', ensureAuthenticated, accountsController.show);
 
 export default accountsRouter;

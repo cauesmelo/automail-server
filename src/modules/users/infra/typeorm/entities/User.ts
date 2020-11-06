@@ -52,7 +52,7 @@ class User {
   @Column()
   bumpSettingsId: string;
 
-  @OneToOne(() => BumpSettings)
+  @OneToOne(() => BumpSettings, { cascade: true })
   @JoinColumn()
   bumpSettings: BumpSettings;
 

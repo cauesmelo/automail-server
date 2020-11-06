@@ -32,11 +32,10 @@ export default async function ensureAuthenticated(
         audience: GOOGLE_MAILING_CLIENT_ID,
       };
       const ticket = await client.verifyIdToken(tokenData);
-      const payload = ticket.getPayload();
-      return payload;
+      ticket.getPayload();
+      return next();
     } catch (error) {
-      throw new AppError('Invalid token.', 401);
-      // deslogar usuario no front
+      return response.status(401).json('Invalid token.');
     }
   }
 
@@ -45,6 +44,4 @@ export default async function ensureAuthenticated(
     .catch(e => {
       console.log(e);
     });
-
-  return next();
 }

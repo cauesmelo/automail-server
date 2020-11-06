@@ -46,10 +46,10 @@ class BumpSettings {
   bumpDays: DaysOfWeek[];
 
   @Column('time')
-  bumpTimeStart: Date;
+  bumpTimeStart: string;
 
   @Column('time')
-  bumpTimeEnd: Date;
+  bumpTimeEnd: string;
 
   @Column('boolean')
   bumpCopy: boolean;

@@ -9,4 +9,5 @@ const accountsController = new AccountsController();
 
 accountsRouter.get('/', ensureAuthenticated, accountsController.show);
 
+accountsRouter.put('/', ensureAuthenticated, accountsController.update);
 export default accountsRouter;

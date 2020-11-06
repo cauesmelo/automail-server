@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
 import ShowAccountConfigService from '@modules/users/services/ShowAccountConfigService';
+import UpdateBumpSettingsService from '@modules/users/services/UpdateBumpSettingsService';
 
 export default class AccountsControler {
   public async show(request: Request, response: Response): Promise<Response> {
@@ -19,20 +20,25 @@ export default class AccountsControler {
     return response.json(userConfig);
   }
 
-  // public async update(request: Request, response: Response): Promise<Response> {
-  //   const { name, email, oldPassword, password } = request.body;
-  //   const user_id = request.user.id;
+  public async update(request: Request, response: Response): Promise<Response> {
+    const {
+      dataForm: { timezone, days, startHour, endHour, copy },
+      userEmail,
+    } = request.body;
 
-  //   const updateProfile = container.resolve(UpdateProfileService);
+    const copyBool = !!copy[0];
 
-  //   const user = await updateProfile.execute({
-  //     user_id,
-  //     name,
-  //     email,
-  //     oldPassword,
-  //     password,
-  //   });
+    const updateBumpSettings = container.resolve(UpdateBumpSettingsService);
 
-  //   return response.json(classToClass(user));
-  // }
+    const bumpSettings = await updateBumpSettings.execute({
+      userEmail,
+      timezone,
+      days,
+      startHour,
+      endHour,
+      copyBool,
+    });
+
+    return response.json(bumpSettings);
+  }
 }

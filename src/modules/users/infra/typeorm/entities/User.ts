@@ -1,5 +1,5 @@
 import BumpSettings from '@modules/users/infra/typeorm/entities/BumpSettings';
-import FollowUpSequence from '@modules/bumps/infra/typeorm/entities/FollowUpSequence';
+import FollowUpSequence from '@modules/followUp/infra/typeorm/entities/FollowUpSequence';
 
 import {
   Entity,

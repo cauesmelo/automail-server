@@ -4,6 +4,7 @@ import AppError from '@shared/errors/AppError';
 
 import ShowAccountConfigService from '@modules/users/services/ShowAccountConfigService';
 import UpdateBumpSettingsService from '@modules/users/services/UpdateBumpSettingsService';
+import UpdateNameService from '@modules/users/services/UpdateNameService';
 
 export default class AccountsControler {
   public async show(request: Request, response: Response): Promise<Response> {
@@ -38,7 +39,22 @@ export default class AccountsControler {
       endHour,
       copyBool,
     });
-
     return response.json(bumpSettings);
+  }
+
+  public async updateName(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { username, userEmail } = request.body;
+
+    const updateName = container.resolve(UpdateNameService);
+
+    const user = await updateName.execute({
+      userEmail,
+      username,
+    });
+
+    return response.json(user);
   }
 }

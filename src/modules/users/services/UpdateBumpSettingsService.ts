@@ -23,7 +23,7 @@ interface IRequest {
 }
 
 @injectable()
-export default class ShowProfileService {
+export default class UpdateBumpSettingsService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -45,12 +45,8 @@ export default class ShowProfileService {
     user.bumpSettings.bumpCopy = copyBool;
     user.bumpSettings.timezone = timezone;
     user.bumpSettings.bumpDays = days;
-    user.bumpSettings.bumpTimeEnd = `${
-      endHour.length === 2 ? endHour : `0${endHour}`
-    }:00:00`;
-    user.bumpSettings.bumpTimeStart = `${
-      startHour.length === 2 ? startHour : `0${startHour}`
-    }:00:00`;
+    user.bumpSettings.bumpTimeEnd = endHour;
+    user.bumpSettings.bumpTimeStart = startHour;
 
     return this.usersRepository.save(user);
   }

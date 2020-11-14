@@ -26,6 +26,7 @@ class EmailModel {
   @ManyToOne(
     () => FollowUpSequence,
     followUpSequence => followUpSequence.emailModel,
+    { onDelete: 'CASCADE' },
   )
   followUpSequence: FollowUpSequence;
 

@@ -1,7 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 
 import EmailModel from '@modules/followUp/infra/typeorm/entities/EmailModel';
-// import AppError from '@shared/errors/AppError';
 
 import IEmailModelsRepository from '@modules/followUp/repositories/IEmailModelsRepository';
 

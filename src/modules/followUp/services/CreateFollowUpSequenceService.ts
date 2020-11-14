@@ -1,8 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 
 import FollowUpSequence from '@modules/followUp/infra/typeorm/entities/FollowUpSequence';
-// import AppError from '@shared/errors/AppError';
-
 import IFollowUpSequenceRepository from '@modules/followUp/repositories/IFollowUpSequenceRepository';
 
 interface IRequest {

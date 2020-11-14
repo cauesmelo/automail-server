@@ -2,6 +2,7 @@ import { getRepository, Repository } from 'typeorm';
 import EmailModel from '@modules/followUp/infra/typeorm/entities/EmailModel';
 import IEmailModelsRepository from '@modules/followUp/repositories/IEmailModelsRepository';
 import ICreateEmailModelsDTO from '@modules/followUp/dtos/ICreateEmailModelDTO';
+import AppError from '@shared/errors/AppError';
 
 class EmailModelsRepository implements IEmailModelsRepository {
   private ormRepository: Repository<EmailModel>;
@@ -23,6 +24,14 @@ class EmailModelsRepository implements IEmailModelsRepository {
     const emailModel = this.ormRepository.create(data);
     await this.ormRepository.save(emailModel);
     return emailModel;
+  }
+
+  public async delete(id: string): Promise<void> {
+    const emailModel = await this.ormRepository.findOne(id);
+
+    if (!emailModel) throw new AppError('Email Model not found!');
+
+    await this.ormRepository.delete(emailModel);
   }
 }
 

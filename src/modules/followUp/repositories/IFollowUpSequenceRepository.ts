@@ -7,4 +7,5 @@ export default interface IFollowUpSequenceRepository {
   listByEmail(email: string): Promise<FollowUpSequence[] | undefined>;
   create(data: ICreateFollowUpSequenceDTO): Promise<FollowUpSequence>;
   save(followUp: FollowUpSequence): Promise<FollowUpSequence>;
+  delete(id: string): Promise<void>;
 }

@@ -1,4 +1,4 @@
 export default interface ICreateFollowUpSequenceDTO {
-  userEmail: string;
+  userId: string;
   title: string;
 }

@@ -36,8 +36,12 @@ class FollowUpSequenceRepository implements IFollowUpSequenceRepository {
     return this.ormRepository.save(followUpSequence);
   }
 
-  public async create(data: ICreateFollowUpSequenceDTO): Promise<void> {
-    console.log(data);
+  public async create(
+    data: ICreateFollowUpSequenceDTO,
+  ): Promise<FollowUpSequence> {
+    const followUpSequence = this.ormRepository.create(data);
+    await this.ormRepository.save(followUpSequence);
+    return followUpSequence;
   }
 }
 

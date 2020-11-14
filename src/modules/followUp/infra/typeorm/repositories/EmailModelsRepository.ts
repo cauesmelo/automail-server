@@ -1,40 +1,28 @@
 import { getRepository, Repository } from 'typeorm';
-import EmailModels from '@modules/followUp/infra/typeorm/entities/EmailModel';
+import EmailModel from '@modules/followUp/infra/typeorm/entities/EmailModel';
 import IEmailModelsRepository from '@modules/followUp/repositories/IEmailModelsRepository';
 import ICreateEmailModelsDTO from '@modules/followUp/dtos/ICreateEmailModelDTO';
 
 class EmailModelsRepository implements IEmailModelsRepository {
-  private ormRepository: Repository<EmailModels>;
+  private ormRepository: Repository<EmailModel>;
 
   constructor() {
-    this.ormRepository = getRepository(EmailModels);
+    this.ormRepository = getRepository(EmailModel);
   }
 
-  public async findById(id: string): Promise<EmailModels | undefined> {
-    const followUpSequence = await this.ormRepository.findOne(id);
-    return followUpSequence;
+  public async findById(id: string): Promise<EmailModel | undefined> {
+    const emailModel = await this.ormRepository.findOne(id);
+    return emailModel;
   }
 
-  public async findByName(name: string): Promise<EmailModels | undefined> {
-    const followUpSequence = await this.ormRepository.findOne(name);
-    return followUpSequence;
+  public async save(emailModel: EmailModel): Promise<EmailModel> {
+    return this.ormRepository.save(emailModel);
   }
 
-  public async listByFollowUpId(
-    id: string,
-  ): Promise<EmailModels[] | undefined> {
-    const followUpSequence = await this.ormRepository.find({
-      where: { followUpSequenceId: id },
-    });
-    return followUpSequence;
-  }
-
-  public async save(followUpSequence: EmailModels): Promise<EmailModels> {
-    return this.ormRepository.save(followUpSequence);
-  }
-
-  public async create(data: ICreateEmailModelsDTO): Promise<void> {
-    console.log(data);
+  public async create(data: ICreateEmailModelsDTO): Promise<EmailModel> {
+    const emailModel = this.ormRepository.create(data);
+    await this.ormRepository.save(emailModel);
+    return emailModel;
   }
 }
 

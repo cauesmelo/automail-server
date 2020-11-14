@@ -19,9 +19,6 @@ class FollowUpSequence {
   @Column()
   userId: string;
 
-  @Column()
-  userEmail: string;
-
   @ManyToOne(() => User, user => user.followUpSequence)
   user: User;
 

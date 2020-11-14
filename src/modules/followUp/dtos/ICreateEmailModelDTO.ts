@@ -1,5 +1,6 @@
 export default interface ICreateEmailModelDTO {
-  title: string;
+  userId: string;
+  followUpSequenceId: string;
   content: string;
   daysAfter: number;
 }

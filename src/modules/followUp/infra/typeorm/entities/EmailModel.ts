@@ -17,6 +17,9 @@ class EmailModel {
   @Column()
   userId: string;
 
+  @Column('integer')
+  daysAfter: number;
+
   @Column()
   followUpSequenceId: string;
 

@@ -9,6 +9,12 @@ const emailModelController = new EmailModelsController();
 
 emailModelRouter.get('/', ensureAuthenticated, emailModelController.index);
 
+emailModelRouter.get(
+  '/default',
+  ensureAuthenticated,
+  emailModelController.default,
+);
+
 emailModelRouter.put('/', ensureAuthenticated, emailModelController.update);
 
 emailModelRouter.delete('/', ensureAuthenticated, emailModelController.delete);

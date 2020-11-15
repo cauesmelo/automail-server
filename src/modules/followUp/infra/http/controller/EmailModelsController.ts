@@ -6,6 +6,7 @@ import CreateEmailModelService from '@modules/followUp/services/CreateEmailModel
 import UpdateEmailModelService from '@modules/followUp/services/UpdateEmailModelService';
 import DeleteEmailModelService from '@modules/followUp/services/DeleteEmailModelService';
 import ListEmailModelsFromFollowUpSequenceService from '@modules/followUp/services/ListEmailModelsFromFollowUpSequenceService';
+import ReturnDefaultFollowUpSequenceService from '@modules/followUp/services/ReturnDefaultFollowUpSequenceService';
 
 export default class EmailModelsController {
   public async update(request: Request, response: Response): Promise<Response> {
@@ -60,5 +61,22 @@ export default class EmailModelsController {
     });
 
     return response.json(list);
+  }
+
+  public async default(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { userId } = request.query;
+
+    const returnDefaultFollowUpSequence = container.resolve(
+      ReturnDefaultFollowUpSequenceService,
+    );
+
+    const defaultFollowUp = await returnDefaultFollowUpSequence.execute({
+      userId: String(userId),
+    });
+
+    return response.json(defaultFollowUp);
   }
 }

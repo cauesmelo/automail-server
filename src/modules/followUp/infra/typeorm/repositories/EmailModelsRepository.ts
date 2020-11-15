@@ -16,6 +16,15 @@ class EmailModelsRepository implements IEmailModelsRepository {
     return emailModel;
   }
 
+  public async listByFollowUpSequenceId(
+    followUpSequenceId: string,
+  ): Promise<EmailModel[] | undefined> {
+    const emailModelList = await this.ormRepository.find({
+      where: { followUpSequenceId },
+    });
+    return emailModelList;
+  }
+
   public async save(emailModel: EmailModel): Promise<EmailModel> {
     return this.ormRepository.save(emailModel);
   }

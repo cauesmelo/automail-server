@@ -1,27 +1,31 @@
 import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
-import FollowUpSequence from '@modules/followUp/infra/typeorm/entities/FollowUpSequence';
+import EmailModel from '@modules/followUp/infra/typeorm/entities/EmailModel';
 
-import IFollowUpSequenceRepository from '@modules/followUp/repositories/IFollowUpSequenceRepository';
+import IEmailModelsRepository from '@modules/followUp/repositories/IEmailModelsRepository';
 
 interface IRequest {
-  id: string;
+  followUpSequenceId: string;
 }
 
 @injectable()
 class ListEmailModelsFromFollowUpSequenceService {
   constructor(
-    @inject('FollowUpSequenceRepository')
-    private followUpSequenceRepository: IFollowUpSequenceRepository,
+    @inject('EmailModelsRepository')
+    private emailModelsRepository: IEmailModelsRepository,
   ) {}
 
-  public async execute({ id }: IRequest): Promise<FollowUpSequence> {
-    const followUpSequence = await this.followUpSequenceRepository.findById(id);
+  public async execute({
+    followUpSequenceId,
+  }: IRequest): Promise<EmailModel[]> {
+    const emailModels = await this.emailModelsRepository.listByFollowUpSequenceId(
+      followUpSequenceId,
+    );
 
-    if (!followUpSequence) throw new AppError('no followupsequence found');
+    if (!emailModels) throw new AppError('no followupsequence found');
 
-    return followUpSequence;
+    return emailModels;
   }
 }
 

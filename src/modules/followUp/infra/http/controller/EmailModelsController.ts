@@ -5,6 +5,7 @@ import { container } from 'tsyringe';
 import CreateEmailModelService from '@modules/followUp/services/CreateEmailModelService';
 import UpdateEmailModelService from '@modules/followUp/services/UpdateEmailModelService';
 import DeleteEmailModelService from '@modules/followUp/services/DeleteEmailModelService';
+import ListEmailModelsFromFollowUpSequenceService from '@modules/followUp/services/ListEmailModelsFromFollowUpSequenceService';
 
 export default class EmailModelsController {
   public async update(request: Request, response: Response): Promise<Response> {
@@ -45,5 +46,19 @@ export default class EmailModelsController {
     });
 
     return response.json(emailModel);
+  }
+
+  public async index(request: Request, response: Response): Promise<Response> {
+    const { followUpSequenceId } = request.query;
+
+    const listEmailModelsFromFollowUpSequence = container.resolve(
+      ListEmailModelsFromFollowUpSequenceService,
+    );
+
+    const list = await listEmailModelsFromFollowUpSequence.execute({
+      followUpSequenceId: String(followUpSequenceId),
+    });
+
+    return response.json(list);
   }
 }

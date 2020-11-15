@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   OneToMany,
+  JoinColumn,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
@@ -22,7 +23,10 @@ class FollowUpSequence {
   @ManyToOne(() => User, user => user.followUpSequence)
   user: User;
 
-  @OneToMany(() => EmailModel, emailModel => emailModel.followUpSequence)
+  @OneToMany(() => EmailModel, emailModel => emailModel.followUpSequence, {
+    cascade: true,
+  })
+  @JoinColumn()
   emailModel: EmailModel[];
 
   @Column()

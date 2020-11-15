@@ -4,7 +4,6 @@ import { container } from 'tsyringe';
 
 import CreateFollowUpSequenceService from '@modules/followUp/services/CreateFollowUpSequenceService';
 import ListFollowUpSequenceService from '@modules/followUp/services/ListFollowUpSequenceService';
-import ListEmailModelsFromFollowUpSequenceService from '@modules/followUp/services/ListEmailModelsFromFollowUpSequenceService';
 import UpdateFollowUpSequenceService from '@modules/followUp/services/UpdateFollowUpSequenceService';
 import DeleteFollowUpSequenceService from '@modules/followUp/services/DeleteFollowUpSequenceService';
 
@@ -34,19 +33,6 @@ export default class FollowUpSequenceControler {
       title,
     });
     return response.json(updatedFollowUpSequence);
-  }
-
-  public async list(request: Request, response: Response): Promise<Response> {
-    const { id } = request.params;
-
-    const listEmailModelsFromFollowUpSequenceService = container.resolve(
-      ListEmailModelsFromFollowUpSequenceService,
-    );
-
-    const list = await listEmailModelsFromFollowUpSequenceService.execute({
-      id,
-    });
-    return response.json(list);
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {

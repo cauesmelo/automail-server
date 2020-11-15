@@ -31,10 +31,4 @@ followUpSequenceRouter.post(
   followUpSequenceController.create,
 );
 
-followUpSequenceRouter.get(
-  '/list/:id',
-  ensureAuthenticated,
-  followUpSequenceController.list,
-);
-
 export default followUpSequenceRouter;

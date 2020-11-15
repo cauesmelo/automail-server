@@ -32,8 +32,8 @@ export default class AuthenticateUserService {
         const ticket = await client.verifyIdToken(tokenData);
         const payload = ticket.getPayload();
         return payload;
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        throw new AppError('Invalid token.');
       }
       return null;
     }
@@ -41,7 +41,7 @@ export default class AuthenticateUserService {
     const payloadUser = await verifyToken();
 
     if (!payloadUser?.email) {
-      throw new AppError('Erro na autenticação.');
+      throw new AppError('Auth error.');
     }
 
     const findUser = await this.usersRepository.findByEmail(payloadUser?.email);

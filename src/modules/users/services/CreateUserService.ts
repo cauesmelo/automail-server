@@ -1,6 +1,7 @@
-import { injectable, inject } from 'tsyringe';
+import { injectable, inject, container } from 'tsyringe';
 import User from '@modules/users/infra/typeorm/entities/User';
 import AppError from '@shared/errors/AppError';
+import CreateFollowUpSequenceService from '@modules/followUp/services/CreateFollowUpSequenceService';
 import IUsersRepository from '../repositories/IUsersRepository';
 import IBumpSettingsRepository from '../repositories/IBumpSettingsRepository';
 import ICreateUserDTO from '../dtos/ICreateUserDTO';
@@ -38,6 +39,15 @@ export default class CreateUserService {
     user.bumpSettingsId = bumpSettings.id;
 
     const userWithBump = this.usersRepository.save(user);
+
+    const createFollowUpSequence = container.resolve(
+      CreateFollowUpSequenceService,
+    );
+
+    await createFollowUpSequence.execute({
+      title: 'Padrão',
+      userId: user.id,
+    });
 
     return userWithBump;
   }

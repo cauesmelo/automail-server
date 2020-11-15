@@ -7,7 +7,6 @@ import ListFollowUpSequenceService from '@modules/followUp/services/ListFollowUp
 import ListEmailModelsFromFollowUpSequenceService from '@modules/followUp/services/ListEmailModelsFromFollowUpSequenceService';
 import UpdateFollowUpSequenceService from '@modules/followUp/services/UpdateFollowUpSequenceService';
 import DeleteFollowUpSequenceService from '@modules/followUp/services/DeleteFollowUpSequenceService';
-import CreateEmailModelService from '@modules/followUp/services/CreateEmailModelService';
 
 export default class FollowUpSequenceControler {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -44,7 +43,7 @@ export default class FollowUpSequenceControler {
       ListEmailModelsFromFollowUpSequenceService,
     );
 
-    const list = listEmailModelsFromFollowUpSequenceService.execute({
+    const list = await listEmailModelsFromFollowUpSequenceService.execute({
       id,
     });
     return response.json(list);
@@ -73,36 +72,6 @@ export default class FollowUpSequenceControler {
     const followUpSequence = await createFollowUpSequence.execute({
       title,
       userId,
-    });
-
-    const createEmailModel = container.resolve(CreateEmailModelService);
-
-    await createEmailModel.execute({
-      userId,
-      followUpSequenceId: followUpSequence.id,
-      content: 'placeholder text one',
-      daysAfter: 3,
-    });
-
-    await createEmailModel.execute({
-      userId,
-      followUpSequenceId: followUpSequence.id,
-      content: 'placeholder text two',
-      daysAfter: 8,
-    });
-
-    await createEmailModel.execute({
-      userId,
-      followUpSequenceId: followUpSequence.id,
-      content: 'placeholder text three',
-      daysAfter: 15,
-    });
-
-    await createEmailModel.execute({
-      userId,
-      followUpSequenceId: followUpSequence.id,
-      content: 'placeholder text four',
-      daysAfter: 25,
     });
 
     return response.json(followUpSequence);

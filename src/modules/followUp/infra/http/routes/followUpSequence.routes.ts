@@ -32,7 +32,7 @@ followUpSequenceRouter.post(
 );
 
 followUpSequenceRouter.get(
-  '/list',
+  '/list/:id',
   ensureAuthenticated,
   followUpSequenceController.list,
 );

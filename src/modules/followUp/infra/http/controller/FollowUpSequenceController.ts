@@ -11,15 +11,15 @@ import CreateEmailModelService from '@modules/followUp/services/CreateEmailModel
 
 export default class FollowUpSequenceControler {
   public async index(request: Request, response: Response): Promise<Response> {
-    const { userId } = request.body;
-
+    const { userId } = request.query;
     const listFollowUpSequenceService = container.resolve(
       ListFollowUpSequenceService,
     );
 
-    const list = listFollowUpSequenceService.execute({
-      userId,
+    const list = await listFollowUpSequenceService.execute({
+      userId: String(userId),
     });
+
     return response.json(list);
   }
 
@@ -38,7 +38,7 @@ export default class FollowUpSequenceControler {
   }
 
   public async list(request: Request, response: Response): Promise<Response> {
-    const { id } = request.body;
+    const { id } = request.params;
 
     const listEmailModelsFromFollowUpSequenceService = container.resolve(
       ListEmailModelsFromFollowUpSequenceService,

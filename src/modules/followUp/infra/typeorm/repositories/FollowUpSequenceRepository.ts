@@ -16,16 +16,11 @@ class FollowUpSequenceRepository implements IFollowUpSequenceRepository {
     return followUpSequence;
   }
 
-  public async findByName(name: string): Promise<FollowUpSequence | undefined> {
-    const followUpSequence = await this.ormRepository.findOne(name);
-    return followUpSequence;
-  }
-
-  public async listByEmail(
-    email: string,
+  public async listByUserId(
+    userId: string,
   ): Promise<FollowUpSequence[] | undefined> {
     const followUpSequence = await this.ormRepository.find({
-      where: { userEmail: email },
+      where: { userId },
     });
     return followUpSequence;
   }

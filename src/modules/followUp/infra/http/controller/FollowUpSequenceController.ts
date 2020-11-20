@@ -6,6 +6,7 @@ import CreateFollowUpSequenceService from '@modules/followUp/services/CreateFoll
 import ListFollowUpSequenceService from '@modules/followUp/services/ListFollowUpSequenceService';
 import UpdateFollowUpSequenceService from '@modules/followUp/services/UpdateFollowUpSequenceService';
 import DeleteFollowUpSequenceService from '@modules/followUp/services/DeleteFollowUpSequenceService';
+import ReturnDefaultFollowUpSequenceService from '@modules/followUp/services/ReturnDefaultFollowUpSequenceService';
 
 export default class FollowUpSequenceControler {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -58,6 +59,29 @@ export default class FollowUpSequenceControler {
     const followUpSequence = await createFollowUpSequence.execute({
       title,
       userId,
+    });
+
+    return response.json(followUpSequence);
+  }
+
+  public async detail(request: Request, response: Response): Promise<Response> {
+    console.log(request.params);
+
+    return response.json();
+  }
+
+  public async default(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { userId } = request.params;
+
+    const returnDefaultFollowUp = container.resolve(
+      ReturnDefaultFollowUpSequenceService,
+    );
+
+    const followUpSequence = await returnDefaultFollowUp.execute({
+      userId: String(userId),
     });
 
     return response.json(followUpSequence);

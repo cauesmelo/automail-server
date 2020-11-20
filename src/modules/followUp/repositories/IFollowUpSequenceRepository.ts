@@ -4,6 +4,7 @@ import ICreateFollowUpSequenceDTO from '../dtos/ICreateFollowUpSequenceDTO';
 export default interface IFollowUpSequenceRepository {
   findById(id: string): Promise<FollowUpSequence | undefined>;
   listByUserId(id: string): Promise<FollowUpSequence[] | undefined>;
+  findDefaultByUserId(userId: string): Promise<FollowUpSequence>;
   create(data: ICreateFollowUpSequenceDTO): Promise<FollowUpSequence>;
   save(followUp: FollowUpSequence): Promise<FollowUpSequence>;
   delete(id: string): Promise<void>;

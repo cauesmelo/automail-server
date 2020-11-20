@@ -42,14 +42,5 @@ class EmailModelsRepository implements IEmailModelsRepository {
 
     await this.ormRepository.delete(emailModel);
   }
-
-  public async findDefaultByUserId(userId: string): Promise<EmailModel> {
-    const emailModel = await this.ormRepository.findOne(userId);
-
-    if (!emailModel) throw new AppError('Email Model not found!');
-
-    return emailModel;
-  }
 }
-
 export default EmailModelsRepository;

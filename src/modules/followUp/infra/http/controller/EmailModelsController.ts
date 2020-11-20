@@ -48,35 +48,4 @@ export default class EmailModelsController {
 
     return response.json(emailModel);
   }
-
-  public async index(request: Request, response: Response): Promise<Response> {
-    const { followUpSequenceId } = request.query;
-
-    const listEmailModelsFromFollowUpSequence = container.resolve(
-      ListEmailModelsFromFollowUpSequenceService,
-    );
-
-    const list = await listEmailModelsFromFollowUpSequence.execute({
-      followUpSequenceId: String(followUpSequenceId),
-    });
-
-    return response.json(list);
-  }
-
-  public async default(
-    request: Request,
-    response: Response,
-  ): Promise<Response> {
-    const { userId } = request.query;
-
-    const returnDefaultFollowUpSequence = container.resolve(
-      ReturnDefaultFollowUpSequenceService,
-    );
-
-    const defaultFollowUp = await returnDefaultFollowUpSequence.execute({
-      userId: String(userId),
-    });
-
-    return response.json(defaultFollowUp);
-  }
 }

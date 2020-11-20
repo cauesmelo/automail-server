@@ -13,6 +13,13 @@ followUpSequenceRouter.get(
   followUpSequenceController.index,
 );
 
+followUpSequenceRouter.get('/:id', followUpSequenceController.detail);
+
+followUpSequenceRouter.get(
+  '/default/:userId',
+  followUpSequenceController.default,
+);
+
 followUpSequenceRouter.put(
   '/',
   ensureAuthenticated,

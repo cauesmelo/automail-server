@@ -46,6 +46,20 @@ class FollowUpSequenceRepository implements IFollowUpSequenceRepository {
 
     await this.ormRepository.delete(followUpSequence);
   }
+
+  public async findDefaultByUserId(userId: string): Promise<FollowUpSequence> {
+    const followUpSequence = await this.ormRepository.findOne({
+      where: {
+        userId,
+        title: 'Padrão',
+      },
+      relations: ['emailModel'],
+    });
+
+    if (!followUpSequence) throw new AppError('FollowUp Sequence not found!');
+
+    return followUpSequence;
+  }
 }
 
 export default FollowUpSequenceRepository;

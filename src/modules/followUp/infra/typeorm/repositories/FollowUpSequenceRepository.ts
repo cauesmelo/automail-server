@@ -12,7 +12,12 @@ class FollowUpSequenceRepository implements IFollowUpSequenceRepository {
   }
 
   public async findById(id: string): Promise<FollowUpSequence | undefined> {
-    const followUpSequence = await this.ormRepository.findOne(id);
+    const followUpSequence = await this.ormRepository.findOne({
+      where: {
+        id,
+      },
+      relations: ['emailModel'],
+    });
     return followUpSequence;
   }
 

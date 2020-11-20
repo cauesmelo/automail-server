@@ -7,6 +7,7 @@ import ListFollowUpSequenceService from '@modules/followUp/services/ListFollowUp
 import UpdateFollowUpSequenceService from '@modules/followUp/services/UpdateFollowUpSequenceService';
 import DeleteFollowUpSequenceService from '@modules/followUp/services/DeleteFollowUpSequenceService';
 import ReturnDefaultFollowUpSequenceService from '@modules/followUp/services/ReturnDefaultFollowUpSequenceService';
+import ReadFollowUpSequenceService from '@modules/followUp/services/ReadFollowUpSequenceService';
 
 export default class FollowUpSequenceControler {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -65,9 +66,13 @@ export default class FollowUpSequenceControler {
   }
 
   public async detail(request: Request, response: Response): Promise<Response> {
-    console.log(request.params);
+    const { followUpSequenceId } = request.params;
 
-    return response.json();
+    const readFollowUp = container.resolve(ReadFollowUpSequenceService);
+
+    const followUpSequence = await readFollowUp.execute({ followUpSequenceId });
+
+    return response.json(followUpSequence);
   }
 
   public async default(

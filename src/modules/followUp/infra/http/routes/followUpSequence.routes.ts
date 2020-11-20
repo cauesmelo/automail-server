@@ -13,7 +13,10 @@ followUpSequenceRouter.get(
   followUpSequenceController.index,
 );
 
-followUpSequenceRouter.get('/:id', followUpSequenceController.detail);
+followUpSequenceRouter.get(
+  '/:followUpSequenceId',
+  followUpSequenceController.detail,
+);
 
 followUpSequenceRouter.get(
   '/default/:userId',

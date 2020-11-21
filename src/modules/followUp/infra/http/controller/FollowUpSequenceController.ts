@@ -24,28 +24,29 @@ export default class FollowUpSequenceControler {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const { id, title } = request.body;
+    const { id } = request.params;
+    const { title } = request.body;
 
     const updateFollowUpSequenceService = container.resolve(
       UpdateFollowUpSequenceService,
     );
 
     const updatedFollowUpSequence = updateFollowUpSequenceService.execute({
-      id,
+      id: String(id),
       title,
     });
     return response.json(updatedFollowUpSequence);
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
-    const { id } = request.body;
+    const { id } = request.params;
 
     const deleteFollowUpSequenceService = container.resolve(
       DeleteFollowUpSequenceService,
     );
 
-    deleteFollowUpSequenceService.execute({
-      id,
+    await deleteFollowUpSequenceService.execute({
+      id: String(id),
     });
     return response.json().status(200);
   }

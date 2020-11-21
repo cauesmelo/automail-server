@@ -24,13 +24,13 @@ followUpSequenceRouter.get(
 );
 
 followUpSequenceRouter.put(
-  '/',
+  '/:id',
   ensureAuthenticated,
   followUpSequenceController.update,
 );
 
 followUpSequenceRouter.delete(
-  '/',
+  '/:id',
   ensureAuthenticated,
   followUpSequenceController.delete,
 );

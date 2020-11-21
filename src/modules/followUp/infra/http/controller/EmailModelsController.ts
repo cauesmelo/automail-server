@@ -24,12 +24,12 @@ export default class EmailModelsController {
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
-    const { id } = request.body;
+    const { id } = request.params;
 
     const deleteEmailModel = container.resolve(DeleteEmailModelService);
 
-    deleteEmailModel.execute({
-      id,
+    await deleteEmailModel.execute({
+      id: String(id),
     });
 
     return response.json().status(200);

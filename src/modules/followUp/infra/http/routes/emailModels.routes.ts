@@ -9,7 +9,11 @@ const emailModelController = new EmailModelsController();
 
 emailModelRouter.put('/', ensureAuthenticated, emailModelController.update);
 
-emailModelRouter.delete('/', ensureAuthenticated, emailModelController.delete);
+emailModelRouter.delete(
+  '/:id',
+  ensureAuthenticated,
+  emailModelController.delete,
+);
 
 emailModelRouter.post('/', ensureAuthenticated, emailModelController.create);
 

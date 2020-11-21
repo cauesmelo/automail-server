@@ -13,7 +13,7 @@ export default class EmailModelsController {
 
     const updateEmailModel = container.resolve(UpdateEmailModelService);
 
-    const updatedEmailModel = updateEmailModel.execute({
+    const updatedEmailModel = await updateEmailModel.execute({
       id,
       content,
       daysAfter,

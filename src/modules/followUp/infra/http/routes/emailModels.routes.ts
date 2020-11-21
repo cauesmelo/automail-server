@@ -7,7 +7,7 @@ import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthentica
 const emailModelRouter = Router();
 const emailModelController = new EmailModelsController();
 
-emailModelRouter.put('/', ensureAuthenticated, emailModelController.update);
+emailModelRouter.put('/:id', ensureAuthenticated, emailModelController.update);
 
 emailModelRouter.delete(
   '/:id',

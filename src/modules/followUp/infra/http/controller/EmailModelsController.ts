@@ -5,12 +5,11 @@ import { container } from 'tsyringe';
 import CreateEmailModelService from '@modules/followUp/services/CreateEmailModelService';
 import UpdateEmailModelService from '@modules/followUp/services/UpdateEmailModelService';
 import DeleteEmailModelService from '@modules/followUp/services/DeleteEmailModelService';
-import ListEmailModelsFromFollowUpSequenceService from '@modules/followUp/services/ListEmailModelsFromFollowUpSequenceService';
-import ReturnDefaultFollowUpSequenceService from '@modules/followUp/services/ReturnDefaultFollowUpSequenceService';
 
 export default class EmailModelsController {
   public async update(request: Request, response: Response): Promise<Response> {
-    const { id, content, daysAfter } = request.body;
+    const { id } = request.params;
+    const { content, daysAfter } = request.body;
 
     const updateEmailModel = container.resolve(UpdateEmailModelService);
 

@@ -30,10 +30,10 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
 
   return response.status(500).json({
     status: 'error',
-    message: 'pai ta off 😔',
+    message: 'Internal server error. 🤡',
   });
 });
 
 app.listen(3333, () => {
-  console.log('O Pai ta on 😎📻');
+  console.log('Services listening on port 3333. 🤠');
 });

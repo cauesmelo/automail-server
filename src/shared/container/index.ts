@@ -14,6 +14,9 @@ import FollowUpSequenceRepository from '@modules/followUp/infra/typeorm/reposito
 import IEmailModelsRepository from '@modules/followUp/repositories/IEmailModelsRepository';
 import EmailModelsRepository from '@modules/followUp/infra/typeorm/repositories/EmailModelsRepository';
 
+import IOriginalEmailRepository from '@modules/recipients/repositories/IOriginalEmailRepository';
+import OriginalEmailRepository from '@modules/recipients/infra/typeorm/repositories/OriginalEmailRepository';
+
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository,
@@ -27,6 +30,11 @@ container.registerSingleton<IBumpSettingsRepository>(
 container.registerSingleton<IFollowUpSequenceRepository>(
   'FollowUpSequenceRepository',
   FollowUpSequenceRepository,
+);
+
+container.registerSingleton<IOriginalEmailRepository>(
+  'OriginalEmailRepository',
+  OriginalEmailRepository,
 );
 
 container.registerSingleton<IEmailModelsRepository>(

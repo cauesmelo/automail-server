@@ -1,4 +1,6 @@
 export default interface ICreateOriginalEmailDTO {
+  msgId: string;
   subject: string;
-  content: string;
+  fromEmail: string;
+  toEmail: string;
 }

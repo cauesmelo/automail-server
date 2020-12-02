@@ -1,15 +1,24 @@
 import { Request, Response } from 'express';
-// import { container } from 'tsyringe';
+import { container } from 'tsyringe';
 // import AppError from '@shared/errors/AppError';
 
-// import UpdateNameService from '@modules/users/services/UpdateNameService';
+import CreateOriginalEmailService from '@modules/recipients/services/CreateOriginalEmailService';
 
 export default class RecipientsControler {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { msgId, subject, from, to } = request.body;
+    const { msgId, subject, fromEmail, toEmail } = request.body;
 
-    console.log(msgId + subject + from + to);
+    const createOriginalEmail = container.resolve(CreateOriginalEmailService);
 
-    return response.json();
+    const originalEmail = await createOriginalEmail.execute({
+      msgId,
+      subject,
+      fromEmail,
+      toEmail,
+    });
+
+    console.log(originalEmail);
+
+    return response.json(originalEmail);
   }
 }

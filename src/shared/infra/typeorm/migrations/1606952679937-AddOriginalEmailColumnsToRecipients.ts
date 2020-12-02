@@ -1,30 +1,36 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export default class AddOriginalEmailIdToRecipients1606599743840
+export default class AddOriginalEmailColumnsToRecipients1606952679937
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-
       ALTER TABLE recipients
-      ADD COLUMN originalEmailId CHAR(36) NOT NULL
+      ADD COLUMN subject TEXT,
+      ADD COLUMN msgId VARCHAR(998) NOT NULL,
+      ADD COLUMN fromEmail VARCHAR(255) NOT NULL,
+      ADD COLUMN toEmail VARCHAR(255) NOT NULL;
       `);
 
     await queryRunner.query(`
       ALTER TABLE recipients
-      ADD CONSTRAINT FKOriginalEmailRecipients
-      FOREIGN KEY (originalEmailId) REFERENCES originalEmail(id)
+      DROP COLUMN email;
       `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
     ALTER TABLE recipients
-    DROP FOREIGN KEY FKOriginalEmailRecipients
-  `);
+    DROP COLUMN
+      subject,
+      msgId,
+      fromEmail,
+      toEmail;
+    `);
 
     await queryRunner.query(`
     ALTER TABLE recipients
-    DROP COLUMN originalEmailId
-  `);
+    ADD COLUMN
+    email VARCHAR(255) NOT NULL;
+    `);
   }
 }

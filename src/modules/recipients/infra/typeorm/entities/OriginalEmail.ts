@@ -18,10 +18,10 @@ class OriginalEmail {
   subject: string;
 
   @Column()
-  from: string;
+  fromEmail: string;
 
   @Column()
-  to: string;
+  toEmail: string;
 
   @CreateDateColumn()
   createdAt: Date;

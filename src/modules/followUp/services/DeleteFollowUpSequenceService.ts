@@ -11,18 +11,18 @@ interface IRequest {
 class DeleteFollowUpSequenceService {
   constructor(
     @inject('FollowUpSequenceRepository')
-    private emailModelRepository: IFollowUpSequenceRepository,
+    private followUpSequenceRepository: IFollowUpSequenceRepository,
   ) {}
 
   public async execute({ id }: IRequest): Promise<void> {
-    const followUpSequence = await this.emailModelRepository.findById(id);
+    const followUpSequence = await this.followUpSequenceRepository.findById(id);
 
     if (!followUpSequence) throw new AppError('Follow up sequence not found.');
 
     if (followUpSequence?.title === 'Padrão')
       throw new AppError('Cannot delete default follow up sequence.');
 
-    await this.emailModelRepository.delete(id);
+    await this.followUpSequenceRepository.delete(id);
   }
 }
 

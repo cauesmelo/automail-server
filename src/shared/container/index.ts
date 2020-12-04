@@ -14,8 +14,8 @@ import FollowUpSequenceRepository from '@modules/followUp/infra/typeorm/reposito
 import IEmailModelsRepository from '@modules/followUp/repositories/IEmailModelsRepository';
 import EmailModelsRepository from '@modules/followUp/infra/typeorm/repositories/EmailModelsRepository';
 
-import IOriginalEmailRepository from '@modules/recipients/repositories/IOriginalEmailRepository';
-import OriginalEmailRepository from '@modules/recipients/infra/typeorm/repositories/OriginalEmailRepository';
+import IRecipientsRepository from '@modules/recipients/repositories/IRecipientsRepository';
+import RecipientsRepository from '@modules/recipients/infra/typeorm/repositories/RecipientsRepository';
 
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
@@ -32,9 +32,9 @@ container.registerSingleton<IFollowUpSequenceRepository>(
   FollowUpSequenceRepository,
 );
 
-container.registerSingleton<IOriginalEmailRepository>(
-  'OriginalEmailRepository',
-  OriginalEmailRepository,
+container.registerSingleton<IRecipientsRepository>(
+  'RecipientsRepository',
+  RecipientsRepository,
 );
 
 container.registerSingleton<IEmailModelsRepository>(

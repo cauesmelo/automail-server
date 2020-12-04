@@ -6,20 +6,15 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
-  OneToOne,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import FollowUpSequence from '@modules/followUp/infra/typeorm/entities/FollowUpSequence';
-import OriginalEmail from './OriginalEmail';
 
 @Entity('recipients')
 class Recipient {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Column()
-  email: string;
 
   @Column('boolean')
   active: boolean;
@@ -42,9 +37,6 @@ class Recipient {
   @Column()
   followUpSequenceId: string;
 
-  @Column()
-  originalEmailId: string;
-
   @ManyToOne(() => User)
   @JoinColumn({ name: 'userId' })
   User: User;
@@ -53,15 +45,23 @@ class Recipient {
   @JoinColumn({ name: 'followUpSequenceId' })
   followUpSequence: FollowUpSequence;
 
-  @OneToOne(() => OriginalEmail)
-  @JoinColumn({ name: 'originalEmailId ' })
-  originalEmail: OriginalEmail;
-
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column()
+  subject: string;
+
+  @Column()
+  msgId: string;
+
+  @Column()
+  fromEmail: string;
+
+  @Column()
+  toEmail: string;
 }
 
 export default Recipient;

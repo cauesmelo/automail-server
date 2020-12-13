@@ -65,6 +65,33 @@ class FollowUpSequenceRepository implements IFollowUpSequenceRepository {
 
     return followUpSequence;
   }
+
+  public async findByName(
+    name: string,
+    userId: string,
+  ): Promise<FollowUpSequence | undefined> {
+    console.log(name);
+
+    let title = '';
+
+    if (name.toUpperCase() === 'AUTOMAIL') {
+      title = 'Padrão';
+    } else {
+      const [, regex] = name.match(`automail\\+(.*)`);
+      if (regex) title = regex;
+      console.log(regex);
+    }
+
+    const followUpSequence = await this.ormRepository.findOne({
+      where: {
+        userId,
+        title,
+      },
+      relations: ['emailModel'],
+    });
+
+    return followUpSequence;
+  }
 }
 
 export default FollowUpSequenceRepository;

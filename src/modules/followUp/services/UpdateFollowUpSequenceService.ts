@@ -18,13 +18,18 @@ class ReturnDefaultFollowUpSequenceService {
   ) {}
 
   public async execute({ id, title }: IRequest): Promise<FollowUpSequence> {
-    const followUp = await this.followUpSequenceRepository.findById(id);
+    const validation = /^[a-zA-Z0-9 ]*$/;
 
-    if (!followUp) throw new AppError('no followupsequence found');
+    if (validation.test(title)) {
+      const followUp = await this.followUpSequenceRepository.findById(id);
 
-    followUp.title = title;
+      if (!followUp) throw new AppError('no followupsequence found');
 
-    return this.followUpSequenceRepository.save(followUp);
+      followUp.title = title;
+
+      return this.followUpSequenceRepository.save(followUp);
+    }
+    throw new AppError('Invalid title format.');
   }
 }
 

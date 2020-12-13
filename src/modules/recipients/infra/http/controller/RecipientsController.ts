@@ -6,7 +6,14 @@ import CreateRecipientService from '@modules/recipients/services/CreateRecipient
 
 export default class RecipientsControler {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { msgId, subject, fromEmail, toEmail, sentDate } = request.body;
+    const {
+      msgId,
+      subject,
+      fromEmail,
+      toEmail,
+      sentDate,
+      followUpName,
+    } = request.body;
 
     const createRecipient = container.resolve(CreateRecipientService);
 
@@ -16,6 +23,7 @@ export default class RecipientsControler {
       fromEmail,
       toEmail,
       sentDate,
+      followUpName,
     });
 
     console.log(originalEmail);

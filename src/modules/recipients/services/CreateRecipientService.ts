@@ -13,6 +13,7 @@ interface IRequest {
   fromEmail: string;
   toEmail: string;
   sentDate: Date;
+  followUpName: string;
 }
 
 @injectable()
@@ -34,12 +35,14 @@ class CreateRecipientService {
     fromEmail,
     toEmail,
     sentDate,
+    followUpName,
   }: IRequest): Promise<Recipient> {
     const user = await this.usersRepository.findByEmail(fromEmail);
 
     if (!user) throw new AppError('User not found.');
 
-    const followUp = await this.followUpSequenceRepository.findDefaultByUserId(
+    const followUp = await this.followUpSequenceRepository.findByName(
+      followUpName,
       user.id,
     );
 

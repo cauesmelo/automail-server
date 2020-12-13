@@ -5,6 +5,10 @@ export default interface IFollowUpSequenceRepository {
   findById(id: string): Promise<FollowUpSequence | undefined>;
   listByUserId(id: string): Promise<FollowUpSequence[] | undefined>;
   findDefaultByUserId(userId: string): Promise<FollowUpSequence>;
+  findByName(
+    name: string,
+    userId: string,
+  ): Promise<FollowUpSequence | undefined>;
   create(data: ICreateFollowUpSequenceDTO): Promise<FollowUpSequence>;
   save(followUp: FollowUpSequence): Promise<FollowUpSequence>;
   delete(id: string): Promise<void>;

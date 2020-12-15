@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 // import AppError from '@shared/errors/AppError';
 
 import CreateRecipientService from '@modules/recipients/services/CreateRecipientService';
+import ListRecipientService from '@modules/recipients/services/ListRecipientService';
 
 export default class RecipientsControler {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -26,8 +27,18 @@ export default class RecipientsControler {
       followUpName,
     });
 
-    console.log(originalEmail);
-
     return response.json(originalEmail);
+  }
+
+  public async index(request: Request, response: Response): Promise<Response> {
+    const { userId } = request.params;
+
+    const listRecipient = container.resolve(ListRecipientService);
+
+    const recipients = await listRecipient.execute({
+      userId,
+    });
+
+    return response.json(recipients);
   }
 }

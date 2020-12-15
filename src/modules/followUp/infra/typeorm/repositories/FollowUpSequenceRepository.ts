@@ -69,17 +69,19 @@ class FollowUpSequenceRepository implements IFollowUpSequenceRepository {
   public async findByName(
     name: string,
     userId: string,
-  ): Promise<FollowUpSequence | undefined> {
-    console.log(name);
-
+  ): Promise<FollowUpSequence> {
     let title = '';
 
     if (name.toUpperCase() === 'AUTOMAIL') {
       title = 'Padrão';
     } else {
-      const [, regex] = name.match(`automail\\+(.*)`);
-      if (regex) title = regex;
-      console.log(regex);
+      const result = name.match(`automail\\+(.*)`);
+      if (result) {
+        // eslint-disable-next-line
+        title = result[1];
+      } else {
+        title = 'Padrão';
+      }
     }
 
     const followUpSequence = await this.ormRepository.findOne({
@@ -89,6 +91,11 @@ class FollowUpSequenceRepository implements IFollowUpSequenceRepository {
       },
       relations: ['emailModel'],
     });
+
+    if (!followUpSequence)
+      throw new AppError(
+        'No followUpSequence found. Should return the standard sequence.',
+      );
 
     return followUpSequence;
   }

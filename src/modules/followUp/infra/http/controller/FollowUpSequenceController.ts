@@ -31,10 +31,12 @@ export default class FollowUpSequenceControler {
       UpdateFollowUpSequenceService,
     );
 
-    const updatedFollowUpSequence = updateFollowUpSequenceService.execute({
-      id: String(id),
-      title,
-    });
+    const updatedFollowUpSequence = await updateFollowUpSequenceService.execute(
+      {
+        id: String(id),
+        title,
+      },
+    );
     return response.json(updatedFollowUpSequence);
   }
 

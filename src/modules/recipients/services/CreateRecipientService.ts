@@ -46,7 +46,9 @@ class CreateRecipientService {
       user.id,
     );
 
-    if (!followUp) throw new AppError('FollowUpSequence not found.');
+    if (!followUp) console.log('follow up not found');
+
+    // if (!followUp) throw new AppError('FollowUpSequence not found.');
 
     let { daysAfter } = followUp.emailModel[0];
 
@@ -72,6 +74,7 @@ class CreateRecipientService {
       fromEmail,
       toEmail,
     });
+
     return originalEmail;
   }
 }

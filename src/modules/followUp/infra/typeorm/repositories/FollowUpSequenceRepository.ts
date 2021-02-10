@@ -84,7 +84,7 @@ class FollowUpSequenceRepository implements IFollowUpSequenceRepository {
       }
     }
 
-    const followUpSequence = await this.ormRepository.findOne({
+    let followUpSequence = await this.ormRepository.findOne({
       where: {
         userId,
         title,
@@ -92,9 +92,19 @@ class FollowUpSequenceRepository implements IFollowUpSequenceRepository {
       relations: ['emailModel'],
     });
 
+    if (!followUpSequence) {
+      followUpSequence = await this.ormRepository.findOne({
+        where: {
+          userId,
+          title: 'Padrão',
+        },
+        relations: ['emailModel'],
+      });
+    }
+
     if (!followUpSequence)
       throw new AppError(
-        'No followUpSequence found. Should return the standard sequence.',
+        "No followUpSequence found. Should've returned the standard sequence.",
       );
 
     return followUpSequence;
